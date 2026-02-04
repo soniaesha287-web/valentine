@@ -2,188 +2,124 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dhiraj Valentine 💖</title>
+  <title>Be My Valentine 💖</title>
 
   <style>
     body {
       margin: 0;
-      font-family: Arial;
-      text-align: center;
-      background: linear-gradient(to bottom, pink, #ffe6f0);
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: pink;
       overflow: hidden;
+      font-family: Arial, sans-serif;
     }
 
     h1 {
-      font-size: 55px;
-      color: red;
+      font-size: 45px;
+      color: darkred;
+      text-align: center;
     }
 
-    h2 {
-      font-size: 30px;
-      color: darkred;
+    .buttons {
+      margin-top: 30px;
+      position: relative;
     }
 
     button {
       font-size: 20px;
-      padding: 15px 35px;
+      padding: 12px 25px;
+      margin: 10px;
       border: none;
-      border-radius: 15px;
+      border-radius: 10px;
       cursor: pointer;
-      margin: 20px;
     }
 
     #yesBtn {
-      background: red;
-      color: white;
+      background: lightgreen;
     }
 
     #noBtn {
       background: white;
-      color: red;
       position: absolute;
     }
 
-    img {
-      width: 220px;
-      border-radius: 20px;
-      margin-top: 20px;
-    }
-
-    #celebration {
-      display: none;
-      margin-top: 80px;
-    }
-
+    /* Floating Hearts */
     .heart {
       position: absolute;
-      bottom: -20px;
+      color: red;
       font-size: 25px;
-      animation: floatUp 6s linear infinite;
+      animation: floatUp 5s linear infinite;
     }
 
     @keyframes floatUp {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-800px); opacity: 0; }
-    }
-
-    .confetti {
-      position: absolute;
-      top: -10px;
-      font-size: 20px;
-      animation: fall 3s linear forwards;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(800px); opacity: 0; }
-    }
-
-    .photo-box img {
-      width: 180px;
-      margin: 10px;
-      border: 4px solid white;
-      box-shadow: 0 0 15px rgba(255,0,0,0.4);
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-800px);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- MAIN PAGE -->
-  <div id="mainPage">
+  <!-- Background Romantic Music -->
+  <audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+  </audio>
 
-    <h1>Dhiraj 💖</h1>
-    <h2 id="message">Will you be my Valentine? 💐</h2>
+  <!-- Valentine Question -->
+  <h1>Dhiraj ❤️<br>Will you be my Valentine? 💘</h1>
 
-    <img id="reactionImg"
-      src="https://i.ibb.co/w4jZ6nM/crying-girl.gif">
-
-    <div>
-      <button id="yesBtn" onclick="yesClicked()">Yes 😍</button>
-      <button id="noBtn" onclick="noClicked()">No 😢</button>
-    </div>
-
-  </div>
-
-  <!-- CELEBRATION PAGE -->
-  <div id="celebration">
-    <h1>YAYYYY 🎉💖</h1>
-    <h2>You said YES 😭❤️</h2>
-    <h2>Now we are Valentines forever 💌</h2>
-    <h1>I Love You Dhiraj 💕</h1>
-
-    <h2>Us Together 💖</h2>
-
-    <div class="photo-box">
-      <img src="couple.jpg" alt="couple Photo">
-    </div>
+  <!-- Buttons -->
+  <div class="buttons">
+    <button id="yesBtn">Yes 😍</button>
+    <button id="noBtn">No 😢</button>
   </div>
 
   <script>
-    let stage = 0;
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
 
-    function noClicked() {
-      stage++;
+    // NO Button runs away
+    noBtn.addEventListener("mouseover", () => {
+      let x = Math.random() * (window.innerWidth - 150);
+      let y = Math.random() * (window.innerHeight - 150);
 
-      const msg = document.getElementById("message");
-      const img = document.getElementById("reactionImg");
-      const noBtn = document.getElementById("noBtn");
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    });
 
-      if (stage === 1) {
-        msg.innerHTML = "Please Dhiraj 🥺";
-        img.src = "https://i.ibb.co/w4jZ6nM/crying-girl.gif";
-      }
+    // YES button celebration + redirect
+    yesBtn.addEventListener("click", () => {
+      alert("YAYYY!! 🎉💖");
+      window.location.href = "dhiraj.html";
+    });
 
-      else if (stage === 2) {
-        msg.innerHTML = "Don’t say no 😭💔";
-        img.src = "https://i.ibb.co/Jy7cH1F/sad-cat.gif";
-      }
-
-      else if (stage === 3) {
-        msg.innerHTML = "Last chance... PLEASEEEE 😢";
-        img.src = "https://i.ibb.co/0jzqZJp/crying-cat.gif";
-      }
-
-      else {
-        msg.innerHTML = "Okay fine 😭 you can’t click NO now!";
-        noBtn.onmouseover = function () {
-          let x = Math.random() * (window.innerWidth - 150);
-          let y = Math.random() * (window.innerHeight - 150);
-
-          noBtn.style.left = x + "px";
-          noBtn.style.top = y + "px";
-        };
-      }
-    }
-
-    function yesClicked() {
-      document.getElementById("mainPage").style.display = "none";
-      document.getElementById("celebration").style.display = "block";
-      startConfetti();
-    }
-
+    // Floating hearts generator
     function createHeart() {
-      let heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "💖";
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+
       heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.top = "100%";
+
       document.body.appendChild(heart);
 
-      setTimeout(() => heart.remove(), 6000);
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
     }
+
     setInterval(createHeart, 400);
-
-    function startConfetti() {
-      for (let i = 0; i < 50; i++) {
-        let confetti = document.createElement("div");
-        confetti.className = "confetti";
-        confetti.innerHTML = "🎉";
-        confetti.style.left = Math.random() * window.innerWidth + "px";
-        document.body.appendChild(confetti);
-
-        setTimeout(() => confetti.remove(), 3000);
-      }
-    }
   </script>
 
 </body>
