@@ -1,70 +1,190 @@
 <!DOCTYPE html>
-<!-- Valentine site -->
-<html>
+<html lang="en">
 <head>
-  <title>Be My Valentine 💖</title>
+  <meta charset="UTF-8">
+  <title>Dhiraj Valentine 💖</title>
+
   <style>
     body {
-      text-align: center;
+      margin: 0;
       font-family: Arial;
-      margin-top: 100px;
-      background-color: pink;
+      text-align: center;
+      background: linear-gradient(to bottom, pink, #ffe6f0);
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 55px;
+      color: red;
+    }
+
+    h2 {
+      font-size: 30px;
+      color: darkred;
     }
 
     button {
       font-size: 20px;
-      padding: 10px 20px;
-      margin: 20px;
+      padding: 15px 35px;
+      border: none;
+      border-radius: 15px;
       cursor: pointer;
+      margin: 20px;
+    }
+
+    #yesBtn {
+      background: red;
+      color: white;
+    }
+
+    #noBtn {
+      background: white;
+      color: red;
       position: absolute;
     }
 
-    #yes {
-      position: relative;
+    img {
+      width: 220px;
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+
+    #celebration {
+      display: none;
+      margin-top: 80px;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 25px;
+      animation: floatUp 6s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-800px); opacity: 0; }
+    }
+
+    .confetti {
+      position: absolute;
+      top: -10px;
+      font-size: 20px;
+      animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(800px); opacity: 0; }
+    }
+
+    .photo-box img {
+      width: 180px;
+      margin: 10px;
+      border: 4px solid white;
+      box-shadow: 0 0 15px rgba(255,0,0,0.4);
     }
   </style>
 </head>
+
 <body>
 
-  <h1>Dhiraj, Will you be my Valentine? 💘</h1>
+  <!-- MAIN PAGE -->
+  <div id="mainPage">
 
-  <button onclick="window.location.href='dhiraj.html'">
-  Yes 💖
-</button>
-  <button id="no">No</button>
+    <h1>Dhiraj 💖</h1>
+    <h2 id="message">Will you be my Valentine? 💐</h2>
+
+    <img id="reactionImg"
+      src="https://i.ibb.co/w4jZ6nM/crying-girl.gif">
+
+    <div>
+      <button id="yesBtn" onclick="yesClicked()">Yes 😍</button>
+      <button id="noBtn" onclick="noClicked()">No 😢</button>
+    </div>
+
+  </div>
+
+  <!-- CELEBRATION PAGE -->
+  <div id="celebration">
+    <h1>YAYYYY 🎉💖</h1>
+    <h2>You said YES 😭❤️</h2>
+    <h2>Now we are Valentines forever 💌</h2>
+    <h1>I Love You Dhiraj 💕</h1>
+
+    <h2>Us Together 💖</h2>
+
+    <div class="photo-box">
+      <img src="me.jpg" alt="My Photo">
+      <img src="dhiraj.jpg" alt="Dhiraj Photo">
+    </div>
+  </div>
 
   <script>
-    const noBtn = document.getElementById("noBtn");
-  const yesBtn = document.getElementById("yesBtn");
+    let stage = 0;
 
-  noBtn.addEventListener("mouseover", () => {
+    function noClicked() {
+      stage++;
 
-    // YES button position
-    const yesRect = yesBtn.getBoundingClientRect();
+      const msg = document.getElementById("message");
+      const img = document.getElementById("reactionImg");
+      const noBtn = document.getElementById("noBtn");
 
-    let x, y;
+      if (stage === 1) {
+        msg.innerHTML = "Please Dhiraj 🥺";
+        img.src = "https://i.ibb.co/w4jZ6nM/crying-girl.gif";
+      }
 
-    do {
-      // Random position
-      x = Math.floor(Math.random() * (window.innerWidth - 120));
-      y = Math.floor(Math.random() * (window.innerHeight - 120));
+      else if (stage === 2) {
+        msg.innerHTML = "Don’t say no 😭💔";
+        img.src = "https://i.ibb.co/Jy7cH1F/sad-cat.gif";
+      }
 
-    } while (
-      x > yesRect.left - 100 &&
-      x < yesRect.right + 100 &&
-      y > yesRect.top - 100 &&
-      y < yesRect.bottom + 100
-    );
+      else if (stage === 3) {
+        msg.innerHTML = "Last chance... PLEASEEEE 😢";
+        img.src = "https://i.ibb.co/0jzqZJp/crying-cat.gif";
+      }
 
-    // Apply safe position
-    noBtn.style.left = x + "px";
-    noBtn.style.top = y + "px";
-  });
+      else {
+        msg.innerHTML = "Okay fine 😭 you can’t click NO now!";
+        noBtn.onmouseover = function () {
+          let x = Math.random() * (window.innerWidth - 150);
+          let y = Math.random() * (window.innerHeight - 150);
 
-  // YES button celebration page
-  yesBtn.addEventListener("click", () => {
-    window.location.href = "dhiraj.html";
-  });
+          noBtn.style.left = x + "px";
+          noBtn.style.top = y + "px";
+        };
+      }
+    }
+
+    function yesClicked() {
+      document.getElementById("mainPage").style.display = "none";
+      document.getElementById("celebration").style.display = "block";
+      startConfetti();
+    }
+
+    function createHeart() {
+      let heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 400);
+
+    function startConfetti() {
+      for (let i = 0; i < 50; i++) {
+        let confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.innerHTML = "🎉";
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 3000);
+      }
+    }
   </script>
 
 </body>
